@@ -12,6 +12,7 @@ $_SESSION['captcha_id'] = $str;
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <script type="text/javascript" src="lib/jquery-1.11.1.js"></script>
         <script type="text/javascript" src="dist/jquery.validate.min.js"></script>
+        <noscript>Your browser does not support JavaScript!</noscript>
     </head>
     <body>
         <div class="container">
