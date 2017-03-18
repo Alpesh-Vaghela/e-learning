@@ -17,13 +17,14 @@ $_SESSION['captcha_id'] = $str;
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
+                    <div class="no-page-header" id="errorSummary"></div>
                     <div class="panel">
-                        <div class="panel-body">
+                        <div class="panel-body">                            
                             <form id="eLearningForm" method="post" class="form-horizontal" action="">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="first_name">First name</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control alpha" id="first_name" name="first_name" placeholder="First name" />
+                                        <input type="text" class="form-control alpha" id="first_name" name="first_name" placeholder="First name"  autofocus/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -84,7 +85,16 @@ $_SESSION['captcha_id'] = $str;
         <script type = "text/javascript">
             $.validator.setDefaults({
                 submitHandler: function () {
-                    alert("submitted!");
+                    $("#errorSummary").html("");
+                    $.post('validate_and_save.php', $("#eLearningForm").serialize(), function (response) {
+                        if (response.success == true) {
+                            $("#errorSummary").html(response.message);
+                            $("#eLearningForm").trigger("reset");
+                            $("#refreshimg").trigger("click");
+                        } else {
+                            $("#errorSummary").html(response.message);
+                        }
+                    });
                 }
             });
             $(document).ready(function () {
@@ -97,8 +107,7 @@ $_SESSION['captcha_id'] = $str;
                             email: true
                         },
                         phone_number: {
-                            required: true,
-                            minlength: 8
+                            required: true
                         },
                         number_of_learners: {
                             required: true
@@ -117,14 +126,11 @@ $_SESSION['captcha_id'] = $str;
                     messages: {
                         first_name: "Please enter your first name.",
                         last_name: "Please enter your last name.",
-                        phone_number: {
-                            required: "Please enter a phone number.",
-                            minlength: "Your phone number must consist of at least 8 characters."
-                        },
+                        phone_number: "Please enter a phone number.",
                         email_address: "Please enter a valid email address.",
                         number_of_learners: "Please endter Number of Students / Learners (Maximum).",
                         organization: "Please enter your organization name.",
-                        message: "Please enter message",
+                        message: "Please enter message.",
                         captcha: "Correct captcha is required. Click the captcha to generate a new one."
                     },
                     errorElement: "em",
@@ -147,6 +153,7 @@ $_SESSION['captcha_id'] = $str;
                 $("body").on("click", "#refreshimg", function () {
                     $.post("newsession.php");
                     $("#captchaimage").load("image_req.php");
+                    $("#captcha").val("");
                     return false;
                 });
                 $('.alpha').on('keypress', function (event) {
