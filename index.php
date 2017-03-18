@@ -86,11 +86,12 @@ $_SESSION['captcha_id'] = $str;
             $.validator.setDefaults({
                 submitHandler: function () {
                     $("#errorSummary").html("");
-                    $.post('validate_and_save.php', $("#eLearningForm").serialize(), function (response) {
+                    $.getJSON('validate_and_save.php', $("#eLearningForm").serialize(), function (response) {
                         if (response.success == true) {
                             $("#errorSummary").html(response.message);
                             $("#eLearningForm").trigger("reset");
                             $("#refreshimg").trigger("click");
+                            $(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");
                         } else {
                             $("#errorSummary").html(response.message);
                         }
@@ -159,7 +160,9 @@ $_SESSION['captcha_id'] = $str;
                 $('.alpha').on('keypress', function (event) {
                     var inputValue = event.which;
                     if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
-                        event.preventDefault();
+                        if (inputValue != 8 && inputValue != 13) {
+                            event.preventDefault();
+                        }
                     }
                 });
                 $('.numeric').on("keypress", function (event) {
