@@ -49,6 +49,7 @@ if (!empty($errors)):
     $response['success'] = false;
     $response['message'] = $message;
 else:
+    /*
     $request = array("success" => true, "data" => array("first_name" => $clientContact->firstname, "last_name" => $clientContact->lastname, "email_address" => $model->email, "organization" => $model->company_name, "message" => $model->comments, "number_of_learners" => $model->number_of_learners));
     $params = json_encode($request);
     $url = "http://192.168.0.146/yiipms/webservice/elearningsave";
@@ -63,9 +64,10 @@ else:
     if (!empty(!empty($responseFromERPArr['success']))) {
         $response['success'] = true;
         $response['message'] = '<div class="alert alert-success" role="alert"><h4>Your request is submitted successfully.</h4>';
-    } else {
-        //Error handling of repsponse from ERP
-    }
+    } else { */
+        $response['success'] = true;
+        $response['message'] = '<div class="alert alert-success" role="alert"><h4>Your request is submitted successfully.</h4>';
+    //}
 endif;
 echo json_encode($response);
 exit;

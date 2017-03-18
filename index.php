@@ -19,7 +19,8 @@ $_SESSION['captcha_id'] = $str;
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="no-page-header" id="errorSummary"></div>
                     <div class="panel">
-                        <div class="panel-body">                            
+                        <div class="panel-body"> 
+                            <div class="loader" style="display:none;"></div>
                             <form id="eLearningForm" method="post" class="form-horizontal" action="">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label" for="first_name">First name&nbsp;<span class="required">*</span></label>
@@ -91,14 +92,27 @@ $_SESSION['captcha_id'] = $str;
             $.validator.setDefaults({
                 submitHandler: function () {
                     $("#errorSummary").html("");
-                    $.getJSON('validate_and_save.php', $("#eLearningForm").serialize(), function (response) {
-                        if (response.success == true) {
-                            $("#errorSummary").html(response.message);
-                            $("#eLearningForm").trigger("reset");
-                            $("#refreshimg").trigger("click");
-                            $(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");
-                        } else {
-                            $("#errorSummary").html(response.message);
+                    $(".loader").show();
+                    $.ajax({
+                        url: 'validate_and_save.php',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: $("#eLearningForm").serialize(),
+                        success: function (response) {
+                            if (response.success == true) {
+                                $("#errorSummary").html(response.message);
+                                $("#eLearningForm").trigger("reset");
+                                $("#refreshimg").trigger("click");
+                                $(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");
+                            } else {
+                                $("#errorSummary").html(response.message);
+                            }
+                        },
+                        error: function (response, error) {
+                            alert("Failed to load data.");
+                        },
+                        complete: function () {
+                            $(".loader").hide();
                         }
                     });
                 }
@@ -179,6 +193,16 @@ $_SESSION['captcha_id'] = $str;
         </script>
         <style type="text/css">
             span.required{color:#ff0000;}
+            .loader {
+                position: fixed;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                background: url('images/pageLoader.gif') 50% 50% no-repeat rgb(249,249,249);
+                opacity: .8;
+            }
         </style>
     </body>
 </html>
