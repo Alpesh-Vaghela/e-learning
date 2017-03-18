@@ -22,53 +22,58 @@ $_SESSION['captcha_id'] = $str;
                         <div class="panel-body">                            
                             <form id="eLearningForm" method="post" class="form-horizontal" action="">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="first_name">First name</label>
+                                    <label class="col-sm-4 control-label" for="first_name">First name&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control alpha" id="first_name" name="first_name" placeholder="First name"  autofocus/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="last_name">Last name</label>
+                                    <label class="col-sm-4 control-label" for="last_name">Last name&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control alpha" id="last_name" name="last_name" placeholder="Last name" />
                                     </div>
                                 </div>                                
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="email_address">Email Address</label>
+                                    <label class="col-sm-4 control-label" for="email_address">Email Address&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control" id="email_address" name="email_address" placeholder="Email Address" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="phone_number">Phone Number</label>
+                                    <label class="col-sm-4 control-label" for="phone_number">Phone Number&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone Number" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="organization">Organization</label>
+                                    <label class="col-sm-4 control-label" for="organization">Organization&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control" id="organization" name="organization" placeholder="Organization" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="number_of_learners">Number of Students / Learners (Maximum)</label>
+                                    <label class="col-sm-4 control-label" for="number_of_learners">Number of Students / Learners (Maximum)&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control numeric" id="number_of_learners" name="number_of_learners" placeholder="Number of Students / Learners (Maximum)" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="message">Message</label>
+                                    <label class="col-sm-4 control-label" for="message">Message&nbsp;<span class="required">*</span></label>
                                     <div class="col-sm-5">
                                         <textarea class="form-control" id="message" name="message" placeholder="Message" ></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">                                                                        
-                                    <label class = "col-sm-4 control-label" for="captcha">Enter the characters as seen on the image above (case insensitive):</label>                                    
+                                    <label class = "col-sm-4 control-label" for="captchaimage">&nbsp;</label>
                                     <div class = "col-sm-5">
                                         <div id="captchaimage"><a href="<?php echo htmlEntities($_SERVER['PHP_SELF'], ENT_QUOTES); ?>" id="refreshimg" title="Click to refresh image"><img src="images/image.php?<?php echo time(); ?>" width="132" height="46" alt="Captcha image"></a></div>
-                                        <br />
+                                    </div>
+                                </div>
+                                <div class="form-group">                                                                        
+                                    <label class = "col-sm-4 control-label" for="captcha">Captcha&nbsp;<span class="required">*</span></label>
+                                    <div class = "col-sm-5">
                                         <input class="form-control" placeholder="Captcha" type="text" maxlength="6" name="captcha" id="captcha">
+                                        <br />
                                     </div>
                                 </div>
                                 <div class = "form-group">
@@ -172,5 +177,8 @@ $_SESSION['captcha_id'] = $str;
                 });
             });
         </script>
+        <style type="text/css">
+            span.required{color:#ff0000;}
+        </style>
     </body>
 </html>
